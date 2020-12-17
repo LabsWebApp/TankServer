@@ -25,8 +25,8 @@ public class proxyTank extends base {
     }
 
     public proxyTank(UUID id, tank t, boolean owner){
+        super(base.TANK);
         this.id = id;
-        type = ttank;
         Rectangle sp = t.getSizePlace();
         x = (short) sp.x;
         y = (short) sp.y;
@@ -37,7 +37,7 @@ public class proxyTank extends base {
     }
 
     public proxyTank(proxyTank t){
-        type = ttank;
+        super(base.TANK);
         id = t.id;
         x = t.x;
         y = t.y;

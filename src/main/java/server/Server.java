@@ -25,7 +25,6 @@ public class Server {
                 Socket client = ss.accept();
                 System.out.println("Пришёл игрок... ");
                 inRun _client = new inRun(client);
-                System.out.println("Игрок в диалоге... " + clients.size());
             }
         } catch (Exception e) {
             System.err.println(e);

@@ -39,11 +39,14 @@ public class landshaft {
         int x = m.X(), y = m.Y();
         if (x < 0 && y < 0)
             return false;
+
         Rectangle proxy = new Rectangle(tanks.get(id).getSizePlace());
         if (x < 0) x = proxy.x;
         if (y < 0) y = proxy.y;
         proxy.setLocation(x, y);
-        if (!field.contains(proxy)) return false;
+
+       if(x<0||y<0||(x+proxy.width)>field.width||(y+proxy.height)>field.height)
+           return false;
 
         for (Map.Entry<UUID, tank> entry : tanks.entrySet()) {
             if (entry.getKey() != id && entry.getValue().getSizePlace().intersects(proxy)) {
@@ -71,7 +74,7 @@ public class landshaft {
 
     public String toString(UUID id){
         if(tanks.containsKey(id))
-            return tanks.get(id).toString();
+            return tanks.get(id).toString(id);
         return "У игрока /" + id + "\" нет танка";
     }
 }

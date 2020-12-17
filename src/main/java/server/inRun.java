@@ -32,10 +32,9 @@ public class inRun extends Thread{
     @Override
     public void run() {
         try {
-            System.out.println("Игрок пытается отправить");
-            clientIn obj  = (clientIn)in.readObject();
+            clientIn cin  = (clientIn)in.readObject();
 
-            id = obj.getId();
+            id = cin.getId();
             if (Server.clients.containsKey(id)){
                 Server.clients.remove(id);
                 Server.clients.get(id).down();
@@ -59,23 +58,23 @@ public class inRun extends Thread{
 
             Server.clients.put(id, this);
             Server.log.log(logging.info.PLAYER_IN, id);
-
             try {
                 while (true) {
                         try {
-                            base msg = (base) in.readObject();
+                            Object obj = in.readObject();
+                            base msg = (base) obj;
+
                             switch (msg.type){
-                                case 1:
-                                    move t = (move)msg;
+                                case base.MOVE:
+                                    move t = (move)obj;
                                     t.id = id;
                                     synchronized (Server.land){
-
                                         if(Server.land.move(t, id)){
+                                           // System.out.println(t.X() + " OK  ");
                                             Server.clients.forEach((k, v) -> v.send(t));
                                         }
-
-                                        Server.log.log(logging.info.MOVE, id);
                                     }
+                                    Server.log.log(logging.info.MOVE, id);
                                     break;
                                 default:
                                     throw new ClassNotFoundException("Класс для посыла не найден");
@@ -111,7 +110,7 @@ public class inRun extends Thread{
         }
     }
 
-    private void send (Serializable obj) {
+    public void send (base obj) {
         try {
             out.writeObject(obj);
             out.flush();

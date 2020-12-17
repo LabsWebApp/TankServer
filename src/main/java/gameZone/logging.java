@@ -15,9 +15,9 @@ public class logging {
         String report = "[" + new Date() +"]\n" + "Событие: " + inf + "\n";
 
         if(id==null || inf == info.INFO)
-            System.out.println(report + land.toString());
+            System.out.println(report + land.toString() + "\n***");
         else
-            System.out.println(report + land.toString(id));
+            System.out.println(report + land.toString(id) + "\n***");
     }
     public void log(info inf){
         log(inf, null);
